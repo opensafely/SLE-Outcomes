@@ -1,3 +1,10 @@
 {
-  "files": {}
+  "files": {
+    "opensafely-systemic-lupus-erythematosus-sle.csv": {
+      "id": "opensafely/systemic-lupus-erythematosus-sle/2020-05-12",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/systemic-lupus-erythematosus-sle/2020-05-12/",
+      "downloaded_at": "2023-02-03 17:02:16.153761Z",
+      "sha": "a7354e610e9ccc2f22f8e8b9b1a7c329a971aa7c"
+    }
+  }
 }
