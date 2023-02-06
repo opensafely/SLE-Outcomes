@@ -1,1 +1,2 @@
 opensafely/systemic-lupus-erythematosus-sle/2020-05-12
+opensafely/chronic-cardiac-disease/2020-04-08

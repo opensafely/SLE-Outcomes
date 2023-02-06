@@ -5,6 +5,12 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/systemic-lupus-erythematosus-sle/2020-05-12/",
       "downloaded_at": "2023-02-03 17:02:16.153761Z",
       "sha": "a7354e610e9ccc2f22f8e8b9b1a7c329a971aa7c"
+    },
+    "opensafely-chronic-cardiac-disease.csv": {
+      "id": "opensafely/chronic-cardiac-disease/2020-04-08",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/chronic-cardiac-disease/2020-04-08/",
+      "downloaded_at": "2023-02-06 17:44:15.498882Z",
+      "sha": "2267f6fada9c77a2bbf62ce7a1c07ddf48348d61"
     }
   }
 }

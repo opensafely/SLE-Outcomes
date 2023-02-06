@@ -25,6 +25,7 @@ study = StudyDefinition(
         "2019-02-01", "2020-02-01"
     ),
 
+#Basic Demographic Factors
     age=patients.age_as_of(
         "2019-09-01",
         return_expectations={
@@ -46,17 +47,46 @@ study = StudyDefinition(
     sex=patients.sex(
         return_expectations={
             "rate": "universal",
-            "category": {"ratios": {"1": 0.49,"2": 0.51}},
+            "category": {"ratios": {"M": 0.49,"F": 0.51}},
         }
     ),
 
-    #HAS SYSTEMIC LUPUS 
-    #-- USE LUPUS DATE TO CREATE A BINARY VARIABLE AS CREATING BINARY VAR AND DATE VAR DON'T ALIGN.
-    # sle=patients.with_these_clinical_events(
-    #   codelist=systemic_lupus_erytematosus_codes, 
-    #   return_expectations={"incidence": 0.05} 
-    # ),
+    ethnicity_by_6_groupings=patients.with_ethnicity_from_sus(
+        returning="group_6",
+        use_most_frequent_code=True,
+        return_expectations={
+            "category": {"ratios": {"1": 0.2, "2": 0.1, "3":0.1, "4":0.2, "5":0.2, "6": 0.2}},
+            "incidence": 0.8,
+        },
+    ),
 
+#Date of Death
+    died_any=patients.died_from_any_cause(
+        on_or_after=cohort_start,
+        returning="date_of_death",
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest" : "2000-02-01", "latest": pandemic_start},
+            "incidence" : 0.1
+        },
+    ),
+
+#SARS-CoV-2
+    covid_test_positive=patients.with_test_result_in_sgss(
+        pathogen="SARS-CoV-2",
+        test_result="positive",
+        find_first_match_in_period=True,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        between=[pandemic_start, study_end],
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": pandemic_start, "latest": study_end},
+        },
+
+    ),
+
+#Systemic Lupus Erytematosus
     fst_lupus_dt=patients.with_these_clinical_events(
         codelist=systemic_lupus_erytematosus_codes,
         returning="date",
@@ -66,15 +96,16 @@ study = StudyDefinition(
 
     ),
 
-    #DEATH
-    died_any=patients.died_from_any_cause(
-    on_or_after=cohort_start,
-    returning="date_of_death",
-    date_format="YYYY-MM-DD",
-    return_expectations={
-        "date": {"earliest" : "2000-02-01", "latest": pandemic_start},
-        "incidence" : 0.1
-    },
+#Confounding Health Outcomes 1 Year Prior to the Pandemic Start.
+
+#Chronic Cardiac Disease
+    heart_disease_1_year_prior=patients.with_these_clinical_events(
+        codelist=chronic_heart_disease_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.4, "date": {"earliest":"2000-01-01"}}        
+    )
 )
 
-)
+
