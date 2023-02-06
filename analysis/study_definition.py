@@ -62,7 +62,7 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}},
+        return_expectations={"incidence": 0.4, "date": {"earliest":"2000-01-01"}},
 
     ),
 
