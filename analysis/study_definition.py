@@ -9,6 +9,11 @@ from cohortextractor import (
 
 from codelists import *
 
+pandemic_start = "2020-03-23"
+study_end = "2021-08-31"
+cohort_start = "2000-01-01"
+
+
 
 study = StudyDefinition(
     default_expectations={
@@ -28,7 +33,7 @@ study = StudyDefinition(
         },
     ),
 
-    address=patients.address_as_of(
+    address_imd=patients.address_as_of(
         "2019-09-01",
         returning="index_of_multiple_deprivation",
         round_to_nearest=100,
@@ -41,15 +46,35 @@ study = StudyDefinition(
     sex=patients.sex(
         return_expectations={
             "rate": "universal",
-            "category": {"ratios": {"M": 0.49,"F": 0.51}},
+            "category": {"ratios": {"1": 0.49,"2": 0.51}},
         }
     ),
 
-    sle=patients.with_these_clinical_events(
+    #HAS SYSTEMIC LUPUS 
+    #-- USE LUPUS DATE TO CREATE A BINARY VARIABLE AS CREATING BINARY VAR AND DATE VAR DON'T ALIGN.
+    # sle=patients.with_these_clinical_events(
+    #   codelist=systemic_lupus_erytematosus_codes, 
+    #   return_expectations={"incidence": 0.05} 
+    # ),
+
+    fst_lupus_dt=patients.with_these_clinical_events(
         codelist=systemic_lupus_erytematosus_codes,
-        between=["2000-01-01","today"],
-        find_last_match_in_period=True,
-        return_expectations={"incidence": 0.1},
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}},
+
     ),
+
+    #DEATH
+    died_any=patients.died_from_any_cause(
+    on_or_after=cohort_start,
+    returning="date_of_death",
+    date_format="YYYY-MM-DD",
+    return_expectations={
+        "date": {"earliest" : "2000-02-01", "latest": pandemic_start},
+        "incidence" : 0.1
+    },
+)
 
 )
