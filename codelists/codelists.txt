@@ -1,2 +1,9 @@
 opensafely/systemic-lupus-erythematosus-sle/2020-05-12
 opensafely/chronic-cardiac-disease/2020-04-08
+opensafely/smoking-clear/2020-04-29
+opensafely/hypertension/2020-04-28
+opensafely/cancer-excluding-lung-and-haematological/2020-04-15
+opensafely/lung-cancer/2020-04-15
+opensafely/haematological-cancer/2020-04-15
+opensafely/diabetes/2020-04-15
+opensafely/chronic-kidney-disease-snomed/2020-04-14
