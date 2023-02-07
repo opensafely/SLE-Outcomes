@@ -99,13 +99,73 @@ study = StudyDefinition(
 #Confounding Health Outcomes 1 Year Prior to the Pandemic Start.
 
 #Chronic Cardiac Disease
-    heart_disease_1_year_prior=patients.with_these_clinical_events(
+    heart_disease=patients.with_these_clinical_events(
         codelist=chronic_heart_disease_codes,
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.4, "date": {"earliest":"2000-01-01"}}        
-    )
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
+
+
+#Diabetes
+    diabetes_prior=patients.with_these_clinical_events(
+        codelist=diabetes_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
+
+
+#hypertension
+    hypertension_prior=patients.with_these_clinical_events(
+        codelist=hypertension_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
+
+
+# #CKD
+#     chronic_kidney_disease_prior=patients.with_these_clinical_events(
+#         codelist=chronic_kidney_disease_codes,
+#         returning="date",
+#         date_format="YYYY-MM-DD",
+#         find_first_match_in_period=True,
+#         return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+#     ),
+
+
+#Cancer (excluding haem and lung cancers)
+    cancer_prior=patients.with_these_clinical_events(
+        codelist=cancer_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
+
+
+#Haematological Cancer
+    haematological_cancer_prior=patients.with_these_clinical_events(
+        codelist=haematological_cancer_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
+
+#Lung Cancer
+    lung_cancer_prior=patients.with_these_clinical_events(
+        codelist=lung_cancer_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+    ),
 )
+
 
 
