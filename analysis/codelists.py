@@ -5,6 +5,14 @@ from cohortextractor import (
 
 #Codelist into variables
 
+#Other 
+#Smoking
+clear_smoking_codes = codelist_from_csv(
+    "codelists/opensafely-smoking-clear.csv", system="ctv3", column="CTV3Code", 
+        category_column="Category",
+)
+
+#Diseases/Conditions
 #SLE
 systemic_lupus_erytematosus_codes = codelist_from_csv(
     "codelists/opensafely-systemic-lupus-erythematosus-sle.csv", system = "ctv3", column="CTV3ID"

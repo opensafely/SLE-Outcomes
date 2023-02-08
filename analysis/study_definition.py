@@ -71,6 +71,57 @@ study = StudyDefinition(
         },
     ),
 
+#Smoking
+    smoking_status=patients.categorised_as(
+        {
+            "S": "most_recent_smoking_code = 'S'",
+            "E": """
+                     most_recent_smoking_code = 'E' OR (
+                       most_recent_smoking_code = 'N' AND ever_smoked
+                    )
+                """,
+            "N": "most_recent_smoking_code = 'N' AND NOT ever_smoked",
+            "M": "DEFAULT",
+        },
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "S": 0.6,
+                    "E": 0.1,
+                    "N": 0.2,
+                    "M": 0.1,
+                }
+            },
+        },
+        most_recent_smoking_code=patients.with_these_clinical_events(
+            clear_smoking_codes,
+            find_last_match_in_period=True,
+            on_or_before=pandemic_start,
+            returning="category",
+        ),
+        ever_smoked=patients.with_these_clinical_events(
+            filter_codes_by_category(clear_smoking_codes, include=["S", "E"]),
+            on_or_before=pandemic_start,
+        ),
+    ),
+    # smoking status (combining never and missing)
+    smoking_status_comb=patients.categorised_as(
+        {
+            "S": "most_recent_smoking_code = 'S'",
+            "E": """
+                     most_recent_smoking_code = 'E' OR (
+                       most_recent_smoking_code = 'N' AND ever_smoked
+                    )
+                """,
+            "N + M": "DEFAULT",
+        },
+        return_expectations={
+            "rate": "universal",
+            "category": {"ratios": {"S": 0.6, "E": 0.1, "N + M": 0.3}, }
+        },
+    ),
+
 #SARS-CoV-2
     covid_test_positive=patients.with_test_result_in_sgss(
         pathogen="SARS-CoV-2",
