@@ -6,6 +6,7 @@ df_input <- read_csv(
   col_types = cols(patient_id = col_integer(),age = col_double())
 )
 
+
 #Create binary variable that flags individuals with SLE
 df_clean_1 <- df_input %>% mutate(sle_flag = case_when(!is.na(fst_lupus_dt) ~ 1,
                                                               TRUE ~ 0))

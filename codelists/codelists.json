@@ -53,6 +53,12 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/chronic-kidney-disease-snomed/2020-04-14/",
       "downloaded_at": "2023-02-07 14:31:34.092702Z",
       "sha": "5facf34dc24ff71032df5399b43adcd36997d670"
+    },
+    "opensafely-dmards.csv": {
+      "id": "opensafely/dmards/2020-06-23",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/dmards/2020-06-23/",
+      "downloaded_at": "2023-02-08 13:40:32.197401Z",
+      "sha": "06aae624d5a02a69c9e9e518a6d64e0a8e74e66e"
     }
   }
 }

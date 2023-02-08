@@ -52,3 +52,8 @@ haematological_cancer_codes = codelist_from_csv(
 lung_cancer_codes = codelist_from_csv(
     "codelists/opensafely-lung-cancer.csv", system = "ctv3", column="CTV3ID"
 )
+
+#MEDICATIONS (REQUIRES SOME SEPARATE HANDLING TO SPLIT CODES UP INTO INDIVIDUAL VARIABLES)
+#DMARDS*****
+
+#

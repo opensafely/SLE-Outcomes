@@ -1,0 +1,8 @@
+"obj_type","vpid","snomed_id","bnf_code","dmd_name","bnf_name","form_route","short_name"
+"amp",330026007,98511000001108,"1001030F0BBABAE","Distamine 125mg tablets (Alliance Pharmaceuticals Ltd)","Distamine 125mg tablets","tablet.oral","Distamine"
+"amp",330027003,13711000001108,"1001030F0BBACAF","Distamine 250mg tablets (Alliance Pharmaceuticals Ltd)","Distamine 250mg tablets","tablet.oral","Distamine"
+"amp",37281111000001104,37270111000001104,"1001030F0BDAAAM","Metalcaptase gastro-resistant 150mg tablets (Imported (Germany))","Metalcaptase gastro-resistant 150mg tablets","tabletgastro-resistant.oral","Metalcaptase"
+"amp",37281511000001104,37270911000001104,"1001030F0BDABAN","Metalcaptase gastro-resistant 300mg tablets (Imported (Germany))","Metalcaptase gastro-resistant 300mg tablets","tabletgastro-resistant.oral","Metalcaptase"
+"amp",35924511000001100,679611000001101,"1001030J0BBACAC","Myocrisin 10mg/0.5ml solution for injection ampoules (Sanofi)","Myocrisin 10mg/0.5ml solution for injection ampoules","solutioninjection.intramuscular-deep","Myocrisin"
+"amp",35924611000001100,494311000001101,"1001030J0BBADAD","Myocrisin 20mg/0.5ml solution for injection ampoules (Sanofi)","Myocrisin 20mg/0.5ml solution for injection ampoules","solutioninjection.intramuscular-deep","Myocrisin"
+"amp",35924711000001104,786611000001108,"1001030J0BBAEAE","Myocrisin 50mg/0.5ml solution for injection ampoules (Sanofi)","Myocrisin 50mg/0.5ml solution for injection ampoules","solutioninjection.intramuscular-deep","Myocrisin"
