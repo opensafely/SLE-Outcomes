@@ -216,6 +216,128 @@ study = StudyDefinition(
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
     ),
+
+#Hospital admissions 1 year prior
+    admitted_to_hospital_last_year=patients.admitted_to_hospital(
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
+        return_expectations={"incidence":0.1},
+    ),
+
+# #Hospital Admission for infection 1 year prior ***currently not working will need to implement
+#     admitted_to_hospital_for_infection_last_year=patients.admitted_to_hospital(
+#         with_these_primary_diagnoses=infection_codes,   
+#         returning="binary_flag",
+#         between=["2019-03-23",pandemic_start],
+#         return_expectations={"incidence":0.1},    
+#     ),
+
+#MEDICATIONS 
+#DMARDS
+#AZATHIOPRINE
+    azathioprine_last_year=patients.with_these_clinical_events(
+        azathioprine_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,
+    ),
+
+    ciclosporin_last_year=patients.with_these_clinical_events(
+        ciclosporin_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,
+    ),
+
+    leftlunomide_last_year=patients.with_these_clinical_events(
+        leftlunomide_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,
+    ),
+
+    mercaptopurine_last_year=patients.with_these_clinical_events(
+        mercaptopurine_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,
+    ),
+
+    methotrexate_last_year=patients.with_these_clinical_events(
+        methotrexate_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,   
+    ),    
+
+    penicilliamine_last_year=patients.with_these_clinical_events(
+        penicilliamine_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,   
+    ),
+
+    sulfasalazine_last_year=patients.with_these_clinical_events(
+        sulfasalazine_codes,
+        returning="binary_flag",
+        on_or_before=pandemic_start,
+        find_last_match_in_period=True,   
+    ),       
+
+    #Outcomes*********************(post pandemic start)
+    #Date of an admission to hospital
+    #ONS Death registration (any cause)
+
+    # #diagnosis of:
+    # #post-viral-illness
+    # new_post_viral_diagnoses=patients.with_these_clinical_events(
+    #     codelist= #Create codelist
+    #     returning="date",
+    #     date_format="YYYY-MM-DD",
+    #     find_first_match_in_period=True,
+    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+
+    # ),  
+
+    # #Fatigue
+    # new_fatigue_diagnoses=patients.with_these_clinical_events(
+    #     codelist= #Create codelist
+    #     returning="date",
+    #     date_format="YYYY-MM-DD",
+    #     find_first_match_in_period=True,
+    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+
+    # ),  
+
+    # #Cardiovascular conditions
+    # new_cvd_diagnoses=patients.with_these_clinical_events(
+    #     codelist=chronic_heart_disease_codes,
+    #     returning="date",
+    #     date_format="YYYY-MM-DD",
+    #     find_first_match_in_period=True,
+    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+
+    # ),      
+    # #Depression
+    #  new_lupus_diagnoses=patients.with_these_clinical_events(
+    #     codelist=#Create codelist
+    #     returning="date",
+    #     date_format="YYYY-MM-DD",
+    #     find_first_match_in_period=True,
+    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+
+    # ),     
+
+    # #New SLE
+    # new_lupus_diagnoses=patients.with_these_clinical_events(
+    #     codelist=systemic_lupus_erytematosus_codes,
+    #     returning="date",
+    #     date_format="YYYY-MM-DD",
+    #     find_first_match_in_period=True,
+    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+
+    # ),    
+    
 )
 
 

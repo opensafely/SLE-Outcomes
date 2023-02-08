@@ -4,7 +4,6 @@ expectations:
   population_size: 1000
 
 actions:
-
   generate_study_population:
     run: cohortextractor:latest generate_cohort --study-definition study_definition
     outputs:

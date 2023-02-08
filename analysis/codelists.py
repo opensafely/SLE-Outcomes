@@ -55,5 +55,47 @@ lung_cancer_codes = codelist_from_csv(
 
 #MEDICATIONS (REQUIRES SOME SEPARATE HANDLING TO SPLIT CODES UP INTO INDIVIDUAL VARIABLES)
 #DMARDS*****
+#azathioprine
+azathioprine_codes = codelist_from_csv(
+    "local_codelists/azathioprine_codes.csv", system = "snomed", column="snomed_id"
+)
 
-#
+#ciclosporin
+ciclosporin_codes = codelist_from_csv(
+    "local_codelists/ciclosporin_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#leftlunomide
+leftlunomide_codes = codelist_from_csv(
+    "local_codelists/leftlunomide_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#mercaptopurine
+mercaptopurine_codes = codelist_from_csv(
+    "local_codelists/mercaptopurine_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#methotrexate
+methotrexate_codes = codelist_from_csv(
+    "local_codelists/methotrexate_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#mycophenolate
+mycophenolate_codes = codelist_from_csv(
+    "local_codelists/mycophenolate_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#penicilliamine
+penicilliamine_codes = codelist_from_csv(
+    "local_codelists/penicilliamine_codes.csv", system = "snomed", column="snomed_id"
+)
+
+#sulfasalazine
+sulfasalazine_codes = codelist_from_csv(
+    "local_codelists/sulfasalazine_codes.csv", system = "snomed", column="snomed_id"
+)
+
+# #ICD10 infection    ***Going to need to work out how to implement infection codes A00-B99)
+# infection_codes = codelist_from_csv(
+#     "local_codelists/infection_codes.csv", system = "icd10", column = "code"
+# )
