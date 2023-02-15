@@ -63,7 +63,7 @@ study = StudyDefinition(
     ),
 
 #Date of Death (After Pandemic Start)
-    died_any_date=patients.died_from_any_cause(
+    died_after_20200323 = patients.died_from_any_cause(
         on_or_after=pandemic_start,
         returning="date_of_death",
         date_format="YYYY-MM-DD",
@@ -169,9 +169,8 @@ study = StudyDefinition(
 #Chronic Cardiac Disease
     heart_disease=patients.with_these_clinical_events(
         codelist=chronic_heart_disease_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
@@ -180,9 +179,8 @@ study = StudyDefinition(
 #Diabetes
     diabetes_prior=patients.with_these_clinical_events(
         codelist=diabetes_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
@@ -191,9 +189,8 @@ study = StudyDefinition(
 #hypertension
     hypertension_prior=patients.with_these_clinical_events(
         codelist=hypertension_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
@@ -202,9 +199,8 @@ study = StudyDefinition(
 # #CKD
 #     chronic_kidney_disease_prior=patients.with_these_clinical_events(
 #         codelist=chronic_kidney_disease_codes,
-#         returning="date",
-#         date_format="YYYY-MM-DD",
-#         find_first_match_in_period=True,
+#         returning="binary_flag",
+#         between=["2019-03-23",pandemic_start],
 #         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
 #                                                         "latest": pandemic_start}}        
 #     ),
@@ -213,9 +209,8 @@ study = StudyDefinition(
 #Cancer (excluding haem and lung cancers)
     cancer_prior=patients.with_these_clinical_events(
         codelist=cancer_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
@@ -224,9 +219,8 @@ study = StudyDefinition(
 #Haematological Cancer
     haematological_cancer_prior=patients.with_these_clinical_events(
         codelist=haematological_cancer_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
@@ -234,9 +228,8 @@ study = StudyDefinition(
 #Lung Cancer
     lung_cancer_prior=patients.with_these_clinical_events(
         codelist=lung_cancer_codes,
-        returning="date",
-        date_format="YYYY-MM-DD",
-        find_first_match_in_period=True,
+        returning="binary_flag",
+        between=["2019-03-23",pandemic_start],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
                                                          "latest": pandemic_start}}        
     ),
