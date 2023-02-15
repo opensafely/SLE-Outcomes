@@ -8,3 +8,4 @@ opensafely/haematological-cancer/2020-04-15
 opensafely/diabetes/2020-04-15
 opensafely/chronic-kidney-disease-snomed/2020-04-14
 opensafely/dmards/2020-06-23
+opensafely/depression/2020-07-09

@@ -12,12 +12,13 @@ clear_smoking_codes = codelist_from_csv(
         category_column="Category",
 )
 
-#Diseases/Conditions
+#Diseases/Conditions****************************************
 #SLE
 systemic_lupus_erytematosus_codes = codelist_from_csv(
     "codelists/opensafely-systemic-lupus-erythematosus-sle.csv", system = "ctv3", column="CTV3ID"
 )
 
+#Prior Conditions
 #CHD
 chronic_heart_disease_codes = codelist_from_csv(
     "codelists/opensafely-chronic-cardiac-disease.csv", system = "ctv3", column="CTV3ID"
@@ -53,8 +54,19 @@ lung_cancer_codes = codelist_from_csv(
     "codelists/opensafely-lung-cancer.csv", system = "ctv3", column="CTV3ID"
 )
 
+#Post COVID Conditions***********************************
+fatigue_codes = codelist_from_csv(
+    "local_codelists/HDRUK-PostViral-Fatigue-PH138.csv", system = "ctv3", column="code"
+)
+
+depression_codes = codelist_from_csv(
+    "codelists/opensafely-depression.csv", system = "ctv3", column="CTV3Code"
+)
+
+
+
 #MEDICATIONS (REQUIRES SOME SEPARATE HANDLING TO SPLIT CODES UP INTO INDIVIDUAL VARIABLES)
-#DMARDS*****
+#DMARDS*******************************************************
 #azathioprine
 azathioprine_codes = codelist_from_csv(
     "local_codelists/azathioprine_codes.csv", system = "snomed", column="snomed_id"

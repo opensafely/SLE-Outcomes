@@ -59,6 +59,12 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/dmards/2020-06-23/",
       "downloaded_at": "2023-02-08 13:40:32.197401Z",
       "sha": "06aae624d5a02a69c9e9e518a6d64e0a8e74e66e"
+    },
+    "opensafely-depression.csv": {
+      "id": "opensafely/depression/2020-07-09",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/depression/2020-07-09/",
+      "downloaded_at": "2023-02-15 17:21:28.966141Z",
+      "sha": "654835e97c0cee53307db7ebd8becf48d0e3f31b"
     }
   }
 }

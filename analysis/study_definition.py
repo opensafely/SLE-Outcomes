@@ -22,7 +22,7 @@ study = StudyDefinition(
         "incidence": 0.5,
     },
     population=patients.registered_with_one_practice_between(
-        "2019-02-01", "2020-02-01"
+        "2019-03-23", "2020-03-23"
     ),
 
 #Basic Demographic Factors
@@ -34,20 +34,22 @@ study = StudyDefinition(
         },
     ),
 
+    #English IMD goes from 0-32000, welsh goes from 0-1892, best to do quintiles in 
+    #post processing
     address_imd=patients.address_as_of(
         "2019-09-01",
         returning="index_of_multiple_deprivation",
         round_to_nearest=100,
         return_expectations={
             "rate":"universal",
-            "category": {"ratios": {"100": 0.1, "200": 0.2, "300": 0.7}}
+            "category": {"ratios": {"6399": 0.2, "12000": 0.2, "19000": 0.2,"25000": 0.2,"31000":0.2}}
         },
     ),
 
     sex=patients.sex(
         return_expectations={
             "rate": "universal",
-            "category": {"ratios": {"M": 0.49,"F": 0.51}},
+            "category": {"ratios": {"1": 0.49,"2": 0.51}},
         }
     ),
 
@@ -60,13 +62,13 @@ study = StudyDefinition(
         },
     ),
 
-#Date of Death
-    died_any=patients.died_from_any_cause(
-        on_or_after=cohort_start,
+#Date of Death (After Pandemic Start)
+    died_any_date=patients.died_from_any_cause(
+        on_or_after=pandemic_start,
         returning="date_of_death",
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest" : "2000-02-01", "latest": pandemic_start},
+            "date": {"earliest" : pandemic_start, "latest": pandemic_start},
             "incidence" : 0.1
         },
     ),
@@ -157,7 +159,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.4, "date": {"earliest":"2000-01-01"}},
+        return_expectations={"incidence": 0.4, "date": {"earliest":"2000-01-01", 
+                                                        "latest": pandemic_start}},
 
     ),
 
@@ -169,7 +172,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 
@@ -179,7 +183,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 
@@ -189,7 +194,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 
@@ -199,7 +205,8 @@ study = StudyDefinition(
 #         returning="date",
 #         date_format="YYYY-MM-DD",
 #         find_first_match_in_period=True,
-#         return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+#         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+#                                                         "latest": pandemic_start}}        
 #     ),
 
 
@@ -209,7 +216,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 
@@ -219,7 +227,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 #Lung Cancer
@@ -228,7 +237,8 @@ study = StudyDefinition(
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
-        return_expectations={"incidence": 0.05, "date": {"earliest":"2000-01-01"}}        
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
+                                                         "latest": pandemic_start}}        
     ),
 
 #Hospital admissions 1 year prior
@@ -313,44 +323,44 @@ study = StudyDefinition(
 
     # ),  
 
-    # #Fatigue
-    # new_fatigue_diagnoses=patients.with_these_clinical_events(
-    #     codelist= #Create codelist
-    #     returning="date",
-    #     date_format="YYYY-MM-DD",
-    #     find_first_match_in_period=True,
-    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+    #Fatigue
+    new_fatigue_diagnoses=patients.with_these_clinical_events(
+        codelist= fatigue_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2020-03-23"}},
 
-    # ),  
+    ),  
 
-    # #Cardiovascular conditions
-    # new_cvd_diagnoses=patients.with_these_clinical_events(
-    #     codelist=chronic_heart_disease_codes,
-    #     returning="date",
-    #     date_format="YYYY-MM-DD",
-    #     find_first_match_in_period=True,
-    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+    #Cardiovascular conditions
+    new_cvd_diagnoses=patients.with_these_clinical_events(
+        codelist=chronic_heart_disease_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2020-03-23"}},
 
-    # ),      
-    # #Depression
-    #  new_lupus_diagnoses=patients.with_these_clinical_events(
-    #     codelist=#Create codelist
-    #     returning="date",
-    #     date_format="YYYY-MM-DD",
-    #     find_first_match_in_period=True,
-    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+    ),      
+    #Depression
+     new_depression_diagnoses=patients.with_these_clinical_events(
+        codelist=depression_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.05, "date": {"earliest":"2020-03-23"}},
 
-    # ),     
+    ),     
 
-    # #New SLE
-    # new_lupus_diagnoses=patients.with_these_clinical_events(
-    #     codelist=systemic_lupus_erytematosus_codes,
-    #     returning="date",
-    #     date_format="YYYY-MM-DD",
-    #     find_first_match_in_period=True,
-    #     return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
+    #New SLE
+    new_lupus_diagnoses=patients.with_these_clinical_events(
+        codelist=systemic_lupus_erytematosus_codes,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        find_first_match_in_period=True,
+        return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
 
-    # ),    
+    ),    
     
 )
 
