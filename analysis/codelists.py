@@ -99,3 +99,4 @@ sulfasalazine_codes = codelist_from_csv(
 # infection_codes = codelist_from_csv(
 #     "local_codelists/infection_codes.csv", system = "icd10", column = "code"
 # )
+

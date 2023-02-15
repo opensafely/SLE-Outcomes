@@ -137,6 +137,20 @@ study = StudyDefinition(
 
     ),
 
+    covid_test_negative=patients.with_test_result_in_sgss(
+        pathogen="SARS-CoV-2",
+        test_result="negative",
+        find_first_match_in_period=True,
+        returning="date",
+        date_format="YYYY-MM-DD",
+        between=[pandemic_start, study_end],
+        return_expectations={
+            "incidence": 0.2,
+            "date": {"earliest": pandemic_start, "latest": study_end},
+        },
+
+    ),    
+
 #Systemic Lupus Erytematosus
     fst_lupus_dt=patients.with_these_clinical_events(
         codelist=systemic_lupus_erytematosus_codes,
