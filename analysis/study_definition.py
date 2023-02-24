@@ -22,15 +22,15 @@ study = StudyDefinition(
         "incidence": 0.5,
     },
     # Index date
-    index_date = pandemic_start, # this gives you flexibility to substract eg 1 year of this date
+    index_date = pandemic_start,
 
     population=patients.registered_with_one_practice_between(
-        "index_date - 1 year", "index_date" #LN: what is the reason for restricting your study to this population?
+        "index_date - 1 year", "index_date"
     ),
 
     #Basic Demographic Factors
     age=patients.age_as_of(
-        "2019-09-01", # LN: why this date?
+        "index_date",
         return_expectations={
             "rate": "universal",
             "int": {"distribution": "population_ages"},
@@ -39,13 +39,33 @@ study = StudyDefinition(
 
     #English IMD goes from 0-32000, welsh goes from 0-1892, best to do quintiles in 
     #post processing
-    address_imd=patients.address_as_of(
-        "2019-09-01", # LN: why this date?
-        returning="index_of_multiple_deprivation",
-        round_to_nearest=100,
+    imdQ5 = patients.categorised_as(
+        {
+            "Unknown": "DEFAULT",
+            "1 (most deprived)": "imd >= 0 AND imd < 32844*1/5",
+            "2": "imd >= 32844*1/5 AND imd < 32844*2/5",
+            "3": "imd >= 32844*2/5 AND imd < 32844*3/5",
+            "4": "imd >= 32844*3/5 AND imd < 32844*4/5",
+            "5 (least deprived)": "imd >= 32844*4/5 AND imd <= 32844",
+        },
+        imd = patients.address_as_of(
+            "index_date",
+            returning="index_of_multiple_deprivation",
+            round_to_nearest=100,
+        ),
         return_expectations={
-            "rate":"universal",
-            "category": {"ratios": {"6399": 0.2, "12000": 0.2, "19000": 0.2,"25000": 0.2,"31000":0.2}}
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "Unknown": 0,
+                    "1 (most deprived)": 0.2,
+                    "2": 0.2,
+                    "3": 0.2,
+                    "4": 0.2,
+                    "5 (least deprived)": 0.2,
+                }
+            },
+            "incidence": 1.0,
         },
     ),
 
@@ -71,7 +91,7 @@ study = StudyDefinition(
         returning="date_of_death",
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest" : pandemic_start, "latest": pandemic_start},
+            "date": {"earliest": "index_date", "latest": study_end},
             "incidence" : 0.1
         },
     ),
@@ -137,7 +157,7 @@ study = StudyDefinition(
         between=["index_date", study_end],
         return_expectations={
             "incidence": 0.2,
-            "date": {"earliest": pandemic_start, "latest": study_end},
+            "date": {"earliest": "index_date", "latest": study_end},
         },
 
     ),
@@ -151,13 +171,12 @@ study = StudyDefinition(
         between=["index_date", study_end],
         return_expectations={
             "incidence": 0.2,
-            "date": {"earliest": pandemic_start, "latest": study_end},
+            "date": {"earliest": "index_date", "latest": study_end},
         },
 
     ),    
 
     #Systemic Lupus Erytematosus
-    #LN: Think we discussed this cohort_start issue previously, I can see you're only using cohort_start here and not for e.g. comorbities. Think it'd be good to discuss if this is really what you want
     fst_lupus_dt=patients.with_these_clinical_events(
         codelist=systemic_lupus_erytematosus_codes,
         between=[cohort_start, "index_date"],
@@ -165,7 +184,7 @@ study = StudyDefinition(
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.4, "date": {"earliest":cohort_start, 
-                                                        "latest": pandemic_start}}, # the returning expectations framework will affect your dummy data
+                                                        "latest": "index_date"}}, # the returning expectations framework will affect your dummy data
 
     ),
 
@@ -177,7 +196,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
     #Diabetes
@@ -186,7 +205,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
     #hypertension
@@ -195,7 +214,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
 
@@ -205,7 +224,7 @@ study = StudyDefinition(
 #         returning="binary_flag",
 #         between=["index_date - 1 years", "index_date"],
 #         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-#                                                         "latest": pandemic_start}}        
+#                                                         "latest": "index_date"}}        
 #     ),
 
 
@@ -215,7 +234,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
 
@@ -225,7 +244,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
     #Lung Cancer
@@ -234,7 +253,7 @@ study = StudyDefinition(
         returning="binary_flag",
         between=["index_date - 1 years", "index_date"],
         return_expectations={"incidence": 0.05, "date": {"earliest":"2019-03-23",
-                                                         "latest": pandemic_start}}        
+                                                         "latest": "index_date"}}        
     ),
 
         #Hospital admissions 1 year prior
@@ -248,60 +267,59 @@ study = StudyDefinition(
 #     admitted_to_hospital_for_infection_last_year=patients.admitted_to_hospital(
 #         with_these_primary_diagnoses=infection_codes,   
 #         returning="binary_flag",
-#         between=["2019-03-23",pandemic_start],
+#         between=["2019-03-23","index_date"],
 #         return_expectations={"incidence":0.1},    
 #     ),
 
     #MEDICATIONS 
     #DMARDS
     #AZATHIOPRINE
-    # LN: Would you like ALL medications or restrict to a certain time window?
     azathioprine_last_year=patients.with_these_clinical_events(
         azathioprine_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,
     ),
 
     ciclosporin_last_year=patients.with_these_clinical_events(
         ciclosporin_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,
     ),
 
     leftlunomide_last_year=patients.with_these_clinical_events(
         leftlunomide_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,
     ),
 
     mercaptopurine_last_year=patients.with_these_clinical_events(
         mercaptopurine_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,
     ),
 
     methotrexate_last_year=patients.with_these_clinical_events(
         methotrexate_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,   
     ),    
 
     penicilliamine_last_year=patients.with_these_clinical_events(
         penicilliamine_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,   
     ),
 
     sulfasalazine_last_year=patients.with_these_clinical_events(
         sulfasalazine_codes,
         returning="binary_flag",
-        on_or_before="index_date",
+        between=["index_date - 1 years", "index_date"],
         find_last_match_in_period=True,   
     ),       
 
@@ -323,7 +341,6 @@ study = StudyDefinition(
     #Fatigue
     new_fatigue_diagnoses=patients.with_these_clinical_events(
         codelist= fatigue_codes,
-        on_or_after="index_date", #LN: I'm inferring this from your expectations
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -334,7 +351,6 @@ study = StudyDefinition(
     #Cardiovascular conditions
     new_cvd_diagnoses=patients.with_these_clinical_events(
         codelist=chronic_heart_disease_codes,
-        on_or_after="index_date", #LN: I'm inferring this from your expectations
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -344,7 +360,6 @@ study = StudyDefinition(
     #Depression
      new_depression_diagnoses=patients.with_these_clinical_events(
         codelist=depression_codes,
-        on_or_after="index_date", #LN: I'm inferring this from your expectations
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
@@ -355,7 +370,6 @@ study = StudyDefinition(
     #New SLE
     new_lupus_diagnoses=patients.with_these_clinical_events(
         codelist=systemic_lupus_erytematosus_codes,
-        on_or_after="index_date", #LN: I'm inferring this from your expectations
         returning="date",
         date_format="YYYY-MM-DD",
         find_first_match_in_period=True,
