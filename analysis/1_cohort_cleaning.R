@@ -2,7 +2,7 @@ library('tidyverse')
 library('dplyr')
 
 df_input <- read_csv(
-  here::here("output", "input.csv"),
+  here::here("output", "input.csv.gz"),
   col_types = cols(patient_id = col_integer(),age = col_double())
 )
 
