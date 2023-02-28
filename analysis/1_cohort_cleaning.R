@@ -1,6 +1,5 @@
 library('tidyverse')
 library('dplyr')
-library('plyr')
 
 df_input <- read_csv(
   here::here("output", "input.csv"))
@@ -77,7 +76,7 @@ df <- df %>% select (sex,
                     covid_test_negative_flag,
                     lupus_flag,
                     age_group,
-                    imdQ5,)
+                    imdQ5)
 
 
 #Loop to create demo table, grouped by having lupus or not
@@ -119,10 +118,10 @@ for (i in 1:ncol(df)){
 master.df <- master.df[-1,]
 
 #set any low counts equal to 9
-master.df <- master.df %>% mutate(n = case_when(n< 9 ~ 9,
+master.df <- master.df %>% mutate(n = case_when(n < 9 ~ 9,
                                                 TRUE ~ n))
 #round all counts to the nearest 12 
-master.df <-  master.df %>% mutate(n = round_any(n,12))
+master.df <-  master.df %>% mutate(n = plyr::round_any(n,12))
 
 #Save file as CSV
 write.csv(master.df, file="output/cohort_demo.csv", row.names = F)
