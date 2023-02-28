@@ -2,9 +2,7 @@ library('tidyverse')
 library('dplyr')
 
 df_input <- read_csv(
-  here::here("output", "input.csv.gz"),
-  col_types = cols(patient_id = col_integer(),age = col_double())
-)
+  here::here("output", "input.csv"))
 
 #Save over the original file for quick resetting
 df <- df_input
@@ -25,13 +23,7 @@ df <- df %>% mutate(died_after_20200323_flag = case_when(!is.na(died_after_20200
                                           age > 49 & age < 60 ~ '5: 18-59',
                                           age > 59 & age < 70 ~ '6: 18-69',
                                           age > 69 ~ '7: >69',
-                                          TRUE ~ 'Other'),
-                    imd_quintile = case_when(address_imd < 6400 ~ 1,
-                                             address_imd > 6399 & address_imd < 12800 ~ 2,
-                                             address_imd > 12799 & address_imd < 19200 ~ 3,
-                                             address_imd > 19199 & address_imd < 25600 ~ 4,
-                                             address_imd > 25599 & address_imd < 32001 ~ 1,
-                                             TRUE ~ 999)
+                                          TRUE ~ 'Other')
                     )
 
 #correctly format all of the variables
@@ -58,7 +50,7 @@ df <- df %>% mutate(sex = as.factor(sex),
                     covid_test_negative_flag = as.factor(covid_test_negative_flag),
                     lupus_flag = as.factor(lupus_flag),
                     age_group = as.factor(age_group),
-                    imd_quintile = as.factor(imd_quintile))
+                    imdQ5 = as.factor(imdQ5))
 
 #select only key variables
 df <- df %>% select (sex,
@@ -84,7 +76,7 @@ df <- df %>% select (sex,
                     covid_test_negative_flag,
                     lupus_flag,
                     age_group,
-                    imd_quintile,)
+                    imdQ5,)
 
 
 #Loop to create demo table, grouped by having lupus or not

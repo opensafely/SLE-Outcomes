@@ -162,7 +162,7 @@ study = StudyDefinition(
 
     ),
 
-    covid_test_negative_date=patients.with_test_result_in_sgss(
+    covid_test_negative=patients.with_test_result_in_sgss(
         pathogen="SARS-CoV-2",
         test_result="negative",
         find_first_match_in_period=True,
@@ -344,7 +344,7 @@ study = StudyDefinition(
         codelist= fatigue_codes,
         returning="date",
         date_format="YYYY-MM-DD",
-        between=["covid_test_positive_date", study_end],
+        between=["covid_test_positive", study_end],
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.05, "date": {"earliest":"2021-12-15"}},
 
@@ -355,7 +355,7 @@ study = StudyDefinition(
         codelist=chronic_heart_disease_codes,
         returning="date",
         date_format="YYYY-MM-DD",
-        between=["covid_test_positive_date", study_end],
+        between=["covid_test_positive", study_end],
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.05, "date": {"earliest":"2020-03-23"}},
 
@@ -365,7 +365,7 @@ study = StudyDefinition(
         codelist=depression_codes,
         returning="date",
         date_format="YYYY-MM-DD",
-        between=["covid_test_positive_date", study_end],        
+        between=["covid_test_positive", study_end],        
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.05, "date": {"earliest":"2020-03-23"}},
 
@@ -376,7 +376,7 @@ study = StudyDefinition(
         codelist=systemic_lupus_erytematosus_codes,
         returning="date",
         date_format="YYYY-MM-DD",
-        between=["covid_test_positive_date", study_end],
+        between=["covid_test_positive", study_end],
         find_first_match_in_period=True,
         return_expectations={"incidence": 0.4, "date": {"earliest":"2020-03-23"}},
 
