@@ -99,11 +99,11 @@ has.lupus <- lupus.count$n[2]
 
 #create a blank dataframe
 master.df <- data.frame(cbind(1,1,1,1,1))
-colnames(master.df) <- c("Variable", "Lupus", "Variable Level", "Count", "Perc")
+colnames(master.df) <- c("Variable", "Lupus", "Variable Level", "n", "Perc")
 
 #create an empty row
 empty.row <- data.frame("","","","","")
-colnames(empty.row) <- c("Variable", "Lupus", "Variable Level", "Count", "Perc")
+colnames(empty.row) <- c("Variable", "Lupus", "Variable Level", "n", "Perc")
 
 #perform the analysis loop
 
@@ -115,17 +115,19 @@ for (i in 1:ncol(df)){
   
   temp.df1 <-  data.frame(variable.list[i], temp.df[1], temp.df[2], temp.df[3])
   
-  temp.df1 <- temp.df1 %>% mutate(percentage = case_when(temp.df[1] == 1 ~ (n/has.lupus)*100,
-                                            temp.df[1] == 0 ~ (n/no.lupus)*100))
+  temp.df1 <- temp.df1 %>% mutate(percentage = NA)#case_when(temp.df[1] == 1 ~ (n/has.lupus)*100,
+                                            #temp.df[1] == 0 ~ (n/no.lupus)*100))
   
-  colnames(temp.df1) <- c("Variable", "Lupus", "Variable Level", "Count", "Perc")
-  
-  temp.df1 <-  rbind(temp.df1, empty.row)
+  colnames(temp.df1) <- c("Variable", "Lupus", "Variable Level", "n", "Perc")
   
   master.df <-  rbind(master.df, temp.df1)
 }
 
 master.df <- master.df[-1,]
+
+#round up n to handle any possible low counts
+master.df <- master.df %>% mutate(n = case_when(n< 10 ~ 10,
+                                                TRUE ~ n))
 
 #Save file as CSV
 write.csv(master.df, file="output/cohort_demo.csv", row.names = F)
