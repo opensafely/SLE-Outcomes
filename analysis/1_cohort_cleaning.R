@@ -1,5 +1,6 @@
 library('tidyverse')
 library('dplyr')
+library('plyr')
 
 df_input <- read_csv(
   here::here("output", "input.csv"))
@@ -117,9 +118,11 @@ for (i in 1:ncol(df)){
 
 master.df <- master.df[-1,]
 
-#round up n to handle any possible low counts
-master.df <- master.df %>% mutate(n = case_when(n< 10 ~ 10,
+#set any low counts equal to 9
+master.df <- master.df %>% mutate(n = case_when(n< 9 ~ 9,
                                                 TRUE ~ n))
+#round all counts to the nearest 12 
+master.df <-  master.df %>% mutate(n = round_any(n,12))
 
 #Save file as CSV
 write.csv(master.df, file="output/cohort_demo.csv", row.names = F)
