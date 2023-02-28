@@ -2,7 +2,7 @@ library('tidyverse')
 library('dplyr')
 
 df_input <- read_csv(
-  here::here("output", "input.csv"))
+  here::here("output", "input.csv.gz"))
 
 #Save over the original file for quick resetting
 df <- df_input
