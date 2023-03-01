@@ -14,7 +14,7 @@ actions:
     run: r:latest analysis/1_cohort_cleaning.R
     needs: [generate_study_population]
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         cohort: output/cohort_demo.csv
 
   # simple_regression:
